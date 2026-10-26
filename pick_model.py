@@ -49,6 +49,8 @@ POSITION_PACE_CSV = RESULTS_DIR / "position_pace.csv"
 FOCUS_ROUNDS = 5
 
 CHOICE_SET_SIZE = 25
+#many leagues (this included) also uses two flexes, these were 
+# exlcuded as they don't fit true "positional need" narratives
 STARTERS = {"QB": 1, "RB": 2, "WR": 2, "TE": 1, "K": 1, "DEF": 1}
 POSITIONS = ["QB", "RB", "WR", "TE", "K", "DEF"]
 ROUND_BUCKETS = [(1, 2, "1-2"), (3, 5, "3-5"), (6, 9, "6-9"), (10, 99, "10+")]
