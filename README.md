@@ -1,14 +1,10 @@
 # Fantasy Football Draft Pick Model
-
-What actually drives a fantasy football draft pick? This project replays five
-seasons of a 12-team Sleeper league's drafts (2022–2026, 966 modeled picks) and
-fits **discrete-choice models** that predict which player each manager takes,
+This project began with the question, "What actually determines fantasy football draft picks?"
+It replays five seasons of a 12-team Sleeper league's drafts (2022–2026, 966 modeled picks) and
+fits discrete-choice models that predict which player each manager takes,
 using only what that manager could see when they were on the clock.
 
-The models are written in **pure Python with no dependencies**: the
-conditional logit likelihood, its gradient and Fisher information, a
-ridge-penalized Newton–Raphson solver with step halving, and Gaussian
-elimination are all implemented from scratch.
+The models are written in pure Python with no dependencies. 
 
 ## Approach
 
@@ -20,7 +16,7 @@ Pulls from the Sleeper API:
 
 Players are always tagged with the NFL team they started that season on.
 Other managers' names and Sleeper IDs are replaced with labels like
-"Manager A" (pass `--keep-names` to skip this).
+"Manager A" for their privacy (pass `--keep-names` to skip this).
 
 ### 2. Conditional logit pick model (`pick_model.py`)
 At every pick, the manager chooses one player from a **choice set**: the 25
@@ -35,12 +31,11 @@ is described by 20 traits in four groups:
 | Manager habits | this manager's lean toward a position at this stage of the draft, and toward players from a favorite NFL team |
 
 Manager habits are shrunk toward the league average with pseudo-counts and
-measured **leave-one-season-out**, so a 2024 pick is explained only by the
-manager's other drafts.
+measured on all other seasons (i.e. 2024 habits are explained without 
+including 2024 choices)
 
 Trait importance is reported as standardized coefficients, z-scores, and
-**permutation importance** (drop in log-likelihood per pick when a trait is
-shuffled).
+permutation importance.
 
 ### 3. Two-stage model (`two_stage_model.py`)
 Factors each pick as
@@ -56,7 +51,7 @@ decision keeps predicted position totals in line with how the league actually
 drafts.
 
 ### Evaluation
-Every accuracy number is **out of sample**: each season is predicted by a
+Every accuracy number is out of sample: each season is predicted by a
 model fit only on the other seasons.
 
 ## Results
